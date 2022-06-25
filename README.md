@@ -1,7 +1,5 @@
 # Data Analytics Portfolio
 
-![image-4.png](attachment:image-4.png)
-
 Author - Rashrav Shrestha
 
 The Repository contains Portfolio of Data Analytics Projects completed by me for academic, self learning and hobby purposes. The prejects are presented in the form of Jupyter Notebooks, and R markdown file.
@@ -30,8 +28,3 @@ The Repository contains Portfolio of Data Analytics Projects completed by me for
 
 If you'd like to have a chat with me about the portfolio, work opportunities, or collaboration, then you can connect with me in [LinkedIn](https://www.linkedin.com/in/rashrav-shrestha/) or email me at rashravshrestha123@gmail.com.
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 93dfa92b382c1b4273e229b2e49a9076742af244
