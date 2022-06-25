@@ -1,0 +1,331 @@
+---
+title: "Stat2170 Assignment"
+author: "Rashrav Shrestha (46295194)"
+date: 19/05/2022
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+\tableofcontents
+\newpage
+
+## Question 1 [45 Marks]
+
+**Loading the data set**
+```{r hotel, echo=TRUE}
+hotel = read.table(here::here("data", "hotel2022.dat"), header=TRUE)
+
+```
+### a. Plotting and producing a correlation matrix of the data.
+```{r}
+pairs(hotel, panel = panel.smooth)
+round(cor(hotel), 2)
+```
+**Commenting on the possible relationship**  
+  
+Energy has a **Strong Positive Correlation** with Area. There also appears to be a **Moderate Positive Correlation** between energy and rooms. Looking at the correlation matrix, age and occupancy seem to have a **weak negative correlation** against Energy. Judging from this, Area and Room would be a great predictor of Energy Consumption as they have high coefficient values.
+
+### b. Fitting a model using all the features (area, age, rooms, occupancy) to explain the response variable (energy)
+
+```{r}
+hotel_full_model = lm(energy ~ area + age + rooms + occupancy, data = hotel)
+summary(hotel_full_model)
+```
+
+**Producing a 95% confidence interval that measures the change in the consumption of energy for an increase in each unit of the hotel's area.**
+
+Looking at the coefficients of the full model
+```{r}
+summary(hotel_full_model)$coefficients
+```
+
+**The terms of interests:**  
+
+* $\beta_{area}= 2331.116$
+* $s.e.(\beta_{area})=250.919$
+* $\alpha = 0.05$
+* $df = 11$
+* $t_{df,1-\alpha/2}=2.200985$
+
+\newpage
+
+**Quantile Calculation**
+```{r}
+qt(1-0.05/2,11)
+```
+
+**Calculating Confidence Interval**  
+
+$\beta_{area}\pm t_{11,1-0.05/2} s.e.(\beta_{area})= 2331.116 \pm 2.200985 \times  250.919$ = (**1778.847, 2883.385**)
+
+**Comment:** For a unit increase in area of the hotel, we are 95% confident to expect a change in energy consumption between 1778.85 and 2883.39.
+
+### c. Conducting an F-test for the full regression model and examining the relationship between predictors and response.
+
+
+**Full Mathematical Multiple Regression Model**
+
+- $\hat{energy} = \beta_0+\beta_1$ Area + $\beta_2$ Age $\beta_3$ Rooms $\beta_4$ Occupancy
+
+- $\hat{energy} = -3197.28 + 2331.12$ area $+2.36$ age $-5.38$ rooms $+3234.56$ occupancy    
+
+```{r}
+coefficients(hotel_full_model)
+```
+    
+**Hypothesis for the Overall Anova test of multiple regression**   
+  
+The **Null Hypothesis** suggests that area, age, occupancy and room doesn't have an impact in the energy consumption of the hotel. This tells us that there is no linear relationship.  
+- $H_0: \beta_{1} = \beta_{2} =...= \beta_k = 0$ 
+
+The **Alternative Hypothesis** suggests that atleast one of the predictor variables impact the hotel's energy consumption.  
+- $H_1:$ at least one $\beta_i \neq 0$   
+  
+\newpage
+**ANOVA Table for Full Multiple Regression Model**
+```{r}
+anova(hotel_full_model)
+```
+
+**Calculating the Full Regression S.S. and M.S.**  
+  
+Full Reg S.S. = $RegSS_{area} + RegSS_{age|area} + RegSS_{rooms|area,age} + RegSS_{occupancy|area,age,rooms}$    
+  
+Full Reg S.S. = 232665641 + 556602 + 1293045 + 1625643 = 236140931      
+  
+Reg M.S.=$\frac{Reg.S.S}{k}=$$\frac{236140931}{4}= 59035232.75$   
+
+**Computing the F-statistic**
+
+F-stat = $\frac {Reg M.S}{Res M.S} = \frac{59035232.75}{1332656} = 44.30$  
+
+
+
+**Null distribution for the test statistic**  
+
+$f_{obs}\sim f_{4,11}$
+
+
+**Computing the P-Value**  
+```{r}
+pf(44.298928418136413, 4, 11, lower.tail = FALSE)
+```
+$P(f_{4,11}\geq44.30)= 1.01904e-06$    
+  
+
+**Conclusion**  
+  
+At the 5% level of significance, the Null hypothesis is rejected because the P-value is less than 0.05. Thus, we can conclude that there is a significant relationship between energy response and at least one of the four predictor variables.
+
+### d. Validating the Full Model
+
+**Diagnostic Checking**
+
+* Regression Equation: $Y = \beta_0 + \beta_1X_1+...+\beta_pX_p+\epsilon$ where $N(0,\sigma^2)$
+* Residuals Q-Q plot checks if the residuals are normally distributed: if $\epsilon \sim Normal$
+* fitted vs residuals values plot checks: if the variance of the residuals changes along $\hat{Y}$
+* Residuals vs predictor plot, for each i, checks: if variance of residuals changes along $X_i$
+
+\newpage
+**Plotting the figures**
+```{r, fig.height=5,fig.width=10}
+par(mfrow = c(1, 2))
+qqnorm(hotel_full_model$residuals, main = "Normal Q-Q plot of residuals")
+qqline(hotel_full_model$residuals)
+plot(hotel_full_model,which=1:1)
+```
+In a Normal Q-Q plot, the points will roughly fall on the diagonal line if the errors and residuals are normally distributed. We can see that the bulk of the data seems to fit the diagonal line pretty well, therefore, the assumption that residuals are normally distributed is met. 
+
+The Residuals vs Fitted plot basically shows you if the residuals have non-linear patterns. Some of the data seems to be roughly scattered in the downward portion of the plot but isn't enough to suggest that it doesn't meet the linearity assumption.
+
+
+```{r, fig.height=7,fig.width=7}
+par(mfrow = c(2, 2))
+plot(hotel$area, hotel_full_model$residuals, main = "Residuals vs area",
+xlab = "Area", ylab = "Residuals")
+plot(hotel$age, hotel_full_model$residuals, main = "Residuals vs age",
+xlab = "Age", ylab = "Residuals")
+plot(hotel$rooms, hotel_full_model$residuals, main = "Residuals vs rooms",
+xlab = "Rooms", ylab = "Residuals")
+plot(hotel$occupancy, hotel_full_model$residuals, main = "Residuals vs occupancy",
+xlab = "Occupancy", ylab = "Residuals")
+```
+In the residuals vs predictor plot, we can see the points are randomly distributed across the horizontal axis throughout all the graphs. This tells us that the regression model is suitable for the data. However, there is less scatter on the residuals vs occupancy plot towards the right side. This may suggest that occupancy doesn't have any relationship with energy and it is better if the feature is excluded from the model. 
+
+All in all, the full model seems to be appropriate as it meets all the assumptions. However, the model can be fine-tuned by removing some insignificant features which only increases the model complexity and doesn't impact the response variable much. In this way, the model can be more parsimonious.
+
+
+
+\newpage
+### e. Finding the $R^2$ value of the full model
+```{r}
+summary(hotel_full_model)$r.squared
+```
+**Comment: **This means that 94% variance of the response variable (energy) is explained by the predictor variables in the full regression model (area, age, rooms, occupancy).  
+
+### f. Determining the best Regression Model which explains the data. 
+
+**Stepwise backward selection**
+
+The following steps are followed to prepare the final model    
+- Step 1: Include all the predictor variables in the model  
+- Step 2: remove the predictor that is insignificant and has the highest P-Value   
+- Step 3: Fit the model with the reduced features   
+- Step 4: Repeat Step 2 and 3 until all predicting   variables are not insignificant
+
+```{r}
+summary(hotel_full_model)
+```
+- Only the area variable seems to be significant.
+- Age has the highest P-Value (0.977), Thus, Age explains the least variation when fitted to the model.
+- As the variable with the highest P-value is dropped, the new model will be regressed with the age variable.
+```{r}
+hotel.2 = lm(energy ~ area + rooms + occupancy, data = hotel)
+summary(hotel.2)
+```
+- Both Rooms and Occupancy variables are insignificant.
+- Occupancy has the largest P-Value (0.23), therefore, a new model with Occupancy is regressed
+
+```{r}
+hotel.3 = lm(energy ~ area + rooms , data = hotel)
+summary(hotel.3)
+```
+- The P-value of room is insignificant at the 5% significance level as its P-value (0.300) is higher than 0.05.
+- To make the model parsimonious, the model is regressed with only age as the predictor variable.
+
+```{r}
+hotel_final_model = lm(energy ~ area , data = hotel)
+summary(hotel_final_model)
+```
+**Final Fitted Regression Model**
+```{r}
+  coefficients(hotel_final_model)
+```
+
+$\hat{energy} = -1874.60 + 2061.41$ area 
+
+### g. Comparing the value of $R^2$ and adjusted $R^2$ between the full and the final model.
+
+The  $R^2$ value in the full model decreased from **0.9416** in the full model to **0.9277** in the final model. The difference is only under **2%** which indicates that relevant variables are not removed. The value of $R^2$ increases when more predictors are added to the model. In our full model, all the features are used to predict the energy which leads to better goodness of fit. Hence, focusing solely on high $R^2$ leads to infinitely many predictors which may be irrelevant and does not add much to the model. If a feature does not increase the $R^2$ value, there is no need to add a lot of complexity to the model. The R squared doesn't take into account how significant each one of these features truly is. On the other hand, the adjusted r squared is a better indicator of whether or not the model is getting better with the increasing number of predictors. The Adjusted $R^2$ attempts to balance $R^2$ with the number of predictors. It penalizes the number of parameters to offset the increase in $R^2$. The adjusted $R^2$ value increased from **0.9203** in the full model to **0.9225** in the final one. This tells us that the new model is parsimonious and also has a high $R^2$ value.
+
+\newpage
+
+## Question 2 [29 marks]
+
+**Loading the dataset**
+```{r movie, echo=TRUE}
+movie = read.table(here::here("data", "movie.dat"), header=TRUE)
+head(movie)
+```
+Column 1 and 2 contains the two categorical predictors
+
+
+### a. Checking if the design is unbalanced
+```{r}
+table(movie[, 1:2])
+```
+Here we can observe that the count of replicates differ for different levels of each factor combination. Therefore, the design is unbalanced.
+
+\newpage
+
+### b. Constructing preliminary graphs that investigates various characteristics of the data
+
+
+```{r, fig.width=8}
+with(movie, interaction.plot(Gender, Genre, Score, col = 1:3))
+
+```
+**Comment: **The plot is showing signs of possible interaction between the response and the factors due to the fact that the lines are not parallel. Since the sample sizes for some factor combinations are small, it is difficult to make valid conclusions from the graphs.
+
+```{r, fig.width=10}
+boxplot(Score ~ Gender + Genre, data = movie)
+```
+**Comment:** The second group, third and last group seems to have an unusual spread. This may be due to low replicates. The spread of the first, fourth and the fifth group is identical. The range of the second group seems to be not existent, this is because there is not a lot of variation of Score data in that category.
+
+### c. Stating the full mathematical model and defining all the parameters
+
+$Y_{ijk} = \mu + \alpha_i + \beta_j + \gamma_{ij} + \epsilon_{ijk},\epsilon_{ijj} \sim N(0,\sigma^2)$
+
+* Response: $Y_{ijk}$ = $k^{th}$ replicate of the treatment at $i^{th}$ level in Gender and $j^{th}$ level in Genre.
+
+- $Y_{ijk}$ = Score response
+- $\mu$ = Overall population mean
+- $\alpha_i$= Gender effect
+- $\beta_j$= Genre effect
+- $\gamma_{ij}$= Interaction effect between Gender and Genre
+- $\epsilon_{ijk}$= is the unexplained variation for each replicated observation
+- $\epsilon_{ijk} \sim N(0,\sigma^2)$
+
+**Final Mathematical Model**
+```{r}
+movie.model = lm(Score ~ Gender + Genre, data = movie) 
+coefficients(movie.model)
+```
+$\hat{Score}$ = $3.50 + 0.40$ GenderM + $0.41$ GenreComedy + $0.71$ GenreDrama
+
+
+
+### d. Analyzing the effect of Gender and Genre on Score
+
+**Null and Alternate Hypothesis**  
+
+* $H_0$: no interaction | $\gamma_{ij} = 0$ for all i, j.
+* The effect of Gender is the same whatever the type of Genre is and vice versa. 
+
+* $H_1$: there is interaction | not all $\gamma_{ij} = 0$
+* The effect of Gender will change depending on the level of Genre and vice versa.
+
+
+Fitting the model: Regression approach
+```{r}
+movie.interaction = lm(Score ~ Gender * Genre, data = movie)
+anova(movie.interaction)
+```
+* The Interaction term is not significant, therefore, we fail to reject the null hypothesis. From this, we have no evidence to suggest that Gender and Age are dependent.
+
+From the above anova table, we know that the interaction term for gender and genre is insignificant and can be dropped. We choose a model that will examine the impact of genre after accounting gender.
+
+```{r}
+movie.final = lm(Score ~ Gender + Genre, data = movie) 
+anova(movie.final)
+```
+We can clearly observe that both factors are significant. This means that both Genre and Gender have a significant effect on the Movie Score.
+
+**Does order matters when the design is unbalanced?**
+
+- Reversing the order of the Two-way Analysis of Variance
+```{r}
+movie.final.rev = lm(Score ~ Genre + Gender, data = movie) 
+anova(movie.final.rev)
+```
+When we reverse the model, We notice that the SS values and the P-Values becomes slightly different when the order is reversed. In the reversed model, the P-value of Gender is greater than the alpha value of 0.05, thus, is insignificant. Therefore, in unbalanced design order does matter.
+
+\newpage
+
+**Checking assumptions for the final model**
+```{r, fig.width=8}
+par(mfrow = c(1, 2))
+plot(movie.final, which = 1:2); 
+```
+
+```{r, fig.width=8}
+hist(movie.final$residuals, main = "Residual Distribution")
+```
+
+\newpage
+
+**Observation: **The diagnostic plots presented above appears to validate the final model. There doesn't seem to be any trend or pattern in the residual or the fitted values, the variability between effects appears to be constant. The Normal QQ shows slight curvature on the tails but the majority of the points are closer to the diagonal line suggesting that the residuals are close to normally distributed. Furthermore, the histogram of the residual seems to be skewed to the left but not enough to prove that it isn't normally distributed.    
+  
+
+
+**Conclusion: ** The design seems to be unbalanced as the count of replicates is different for each factor combination. The preliminary graph showed signs of interaction but after fitting the interaction model, we found out that the value of the interaction term is insignificant, therefore, we fail to reject the null hypothesis. After that, we proceeded to fit the model with just the main effects (Gender and Genre) and both of their P-values were significant. However, upon reversing the model, the SS and P-value changed. This suggests that order does matter when the design is unbalanced. The assumptions of the final model were finally checked using normal QQ plot, residual vs fitted plot and the histogram of the residuals. Upon checking the assumptions, the model appears to be suitable to describe the data.
+
+
+
+
+
