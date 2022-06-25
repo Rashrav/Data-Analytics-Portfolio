@@ -12,7 +12,7 @@ The Repository contains Portfolio of Data Analytics Projects completed by me for
 ## Contents
 
 ### 1. Machine Learning Projects
-- [Data Exploration of the Movie Lens Dataset](https://github.com/Rashrav/Data-Analytics-Portfolio/blob/main/Data%20Science/Move%20Lens%20Data%20Exploration.ipynb): Simple procedures such as removing missing values and outliers, displaying descriptive statistics were carried out. Upon exploring and preparing the data, appropriate plots were created to explore the correlation between different features and the rating score.
+- [Data Exploration of the Movie Lens Dataset](https://github.com/Rashrav/Data-Analytics-Portfolio/blob/main/Machine%20Learning/Move%20Lens%20Data%20Exploration.ipynb): Simple procedures such as removing missing values and outliers, displaying descriptive statistics were carried out. Upon exploring and preparing the data, appropriate plots were created to explore the correlation between different features and the rating score.
 
 - [Linear Regression Model: Predictive Analytics](https://github.com/Rashrav/Data-Analytics-Portfolio/blob/main/Machine%20Learning/Linear%20Regression-Predictive%20Analysis.ipynb): The primary focus of this task was training the linear regression models to predict user ratings towards movies. Included basic data science workflow which involved the process of exploring the data, building models, making predictions and evaluating results. The impacts of feature selection of the model were also explored. Experimentation with different training and testing sizes was also carried out. Finally, the models were evaluated and their accuracy on the testing data was visualized and proper conclusions were made.
 
