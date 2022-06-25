@@ -1,30 +1,31 @@
-# Data Science Portfolio
+# Data Analytics Portfolio
 
 Author - Rashrav Shrestha
 
-This repository contains the files for the Portfolio task for COMP2200/6200 in S1 2022. 
+The Repository contains Portfolio of Data Analytics Projects completed by me for academic, self learning and hobby purposes. The prejects are presented in the form of Jupyter Notebooks, and R markdown file.
 
 
-A Brief description of every portfolio task is provided below
+## Instructions for Running Python Notebooks Locally
+- Install dependencies using requirements.txt.
+- Run notebooks as usual by using a jupyter notebook server, Vscode etc.
 
-### Portfolio Part 1
-The main focus of this portfolio task is data exploration and preparation. 
-Simple procedures such as removing missing values and outliers, displaying descriptive statistics were carried out. Upon exploring and preparing the data, appropriate plots were created to explore the correlation between different features and the rating score. 
+## Contents
 
-### Portfolio Part 2
+### 1. Machine Learning Projects
+- [Data Exploration of the Movie Lens Dataset](https://github.com/Rashrav/Data-Analytics-Portfolio/blob/main/Data%20Science/Move%20Lens%20Data%20Exploration.ipynb): Simple procedures such as removing missing values and outliers, displaying descriptive statistics were carried out. Upon exploring and preparing the data, appropriate plots were created to explore the correlation between different features and the rating score.
 
-The primary focus of this task was training the linear regression models to predict user ratings towards movies. Included basic data science workflow which involved the process of exploring the data, building models, making predictions and evaluating results. The impacts of feature selection of the model were also explored. Experimentation with different training and testing sizes was also carried out. Finally, the models were evaluated and their accuracy on the testing data was visualized and proper conclusions were made. 
-
-
-### Portfolio Part 3
-The dataset used for this portfolio was still the movie lens dataset, however, the rating column was replaced with the feedback column. The main objective of this portfolio task was to build and evaluate a predictive model for the feedback variable. In this task, a Simple Logistic regression model, as well as the more advanced K-Nearest Neighbors, were used. A similar data science workflow was carried out which included the process of data preparation (Converting Categorical to Numerical Variable). Recursive Feature Estimation was implemented to determine how many number of features had high accuracy scores. The optimal K value for the KNN model was also determined. Finally, the confusion matrix between the two models was compared and valid conclusions were provided.
+- [Linear Regression Model: Predictive Analytics](https://github.com/Rashrav/Data-Science-Portolio/blob/main/Portfolio_Part_2.ipynb): The primary focus of this task was training the linear regression models to predict user ratings towards movies. Included basic data science workflow which involved the process of exploring the data, building models, making predictions and evaluating results. The impacts of feature selection of the model were also explored. Experimentation with different training and testing sizes was also carried out. Finally, the models were evaluated and their accuracy on the testing data was visualized and proper conclusions were made.
 
 
-### Portfolio Part 4
-The titanic dataset which was obtained from Kaggle was used for this portfolio task. The high-level goal of the project was divided into four different parts:
-- Data Exploration: Finding out the Correlations, Visualizing different variables, and gaining useful insights.
-- Data Preparation: Applying necessary preprocessing techniques to prepare the data for modeling. This involves the process of checking for null values, outliers, etc.
-- Data Modeling: Building and Evaluating predictive models for Survival from available Features. Firstly, a simple logistic regression model is used and its accuracy is evaluated. After that, a function consisting of all the applicable supervised learning models covered in the lectures is created and its level of accuracy is evaluated.
-- Selecting the Machine Learning Best Model: The performance and accuracy of different machine learning models are compared with each other and the model with the best accuracy in predicting the survivability is determined.
+- [Logistic Regression and K-Nearest Neighbors: Predictive Analytics](http://localhost:8888/notebooks/OneDrive/Documents/Github%20Personal/Data-Science-Portolio/Portfolio_Part_3.ipynb): In this task, a Simple Logistic regression model, as well as the more advanced K-Nearest Neighbors trained in order to build and evaluate a predictive model for the feedback variable in the MovieLens Dataset. 
 
-The last portfolio task was more flexible as I got to choose my own dataset and present on my own analysis. 
+
+- [Supervised Learning: Exploratory Analysis of the Titanic Dataset](https://github.com/Rashrav/Data-Science-Portolio/blob/main/Portfolio_Part_2.ipynb): The titanic dataset which was obtained from Kaggle was used for this portfolio task. The high-level goal of the project was divided into four different parts: Data Analysis and Prediction was conducted on the Titanic Dataset which involved the typical Data Science workflow of Data Exploration, Data preparation, Data modelling and Evaluation. Various Machine learning models such as Random Forst, Decision Tree, KNN, Logistic Regression and Naive Bayes were trained in order to predict the survivability of the passenger based on available features. The performance and accuracy of different machine learning models were compared with each other and the model with the best accuracy in predicting the survivability was identified.
+
+### 2. Data Analysis and Visualization
+- [Exploratory Data Analysis Using R](): Applied appropriate statistical methods, such as one-way ANOVA, two-way ANOVA and multiple regression, to answer research questions. Justified and evaluated assumptions underlying the models, and modified the analysis if needed. Used R-studio to create model output and interpreted them. Full r codes presented [here]().
+
+
+### 3.  SQL Projects
+- Tableau and R-studio projects
+
