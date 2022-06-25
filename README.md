@@ -1,5 +1,7 @@
 # Data Analytics Portfolio
 
+![image-4.png](attachment:image-4.png)
+
 Author - Rashrav Shrestha
 
 The Repository contains Portfolio of Data Analytics Projects completed by me for academic, self learning and hobby purposes. The prejects are presented in the form of Jupyter Notebooks, and R markdown file.
@@ -24,5 +26,9 @@ The Repository contains Portfolio of Data Analytics Projects completed by me for
 
 ### 2. Data Analysis and Visualization
 - [Exploratory Data Analysis Using R](https://github.com/Rashrav/Data-Analytics-Portfolio/blob/main/Data%20Analysis%20and%20Visualization/Exploratory%20Data%20Analysis%20Using%20R.pdf): Applied appropriate statistical methods, such as one-way ANOVA, two-way ANOVA and multiple regression, to answer research questions. Justified and evaluated assumptions underlying the models, and modified the analysis if needed. Used R-studio to create model output and interpreted them. Full r codes presented [here](https://github.com/Rashrav/Data-Analytics-Portfolio/blob/main/Data%20Analysis%20and%20Visualization/R%20Script.Rmd).
+
+
+If you'd like to have a chat with me about the portfolio, work opportunities, or collaboration, then you can connect with me in [LinkedIn](https://www.linkedin.com/in/rashrav-shrestha/) or email me at rashravshrestha123@gmail.com.
+
 
 
